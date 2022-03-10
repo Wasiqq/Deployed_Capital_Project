@@ -1,11 +1,17 @@
 import React, { Component } from 'react';
-import { Text, TouchableOpacity, View, ScrollView, RefreshControl, Image, StatusBar ,ActivityIndicator} from 'react-native';
+import { Text, TouchableOpacity, View, ScrollView, RefreshControl, Image, StatusBar, ActivityIndicator } from 'react-native';
 //reuseable 
 import Button from '../reuseable/Buttons';
 import TextInputs from '../reuseable/TextInputs';
 import Helper from '../utilis/Helper';
 import COLORS from '../assests/Colors/COLORS';
 import CheckBox from '@react-native-community/checkbox';
+import { StackActions } from '@react-navigation/native'
+
+import WebHandler from '../data/romote/WebHandler'
+import Routes from '../data/romote/Routes'
+import PrefHandler from '../data/local/PrefHandler';
+
 
 
 const helper = new Helper()
@@ -39,12 +45,41 @@ export default class LoginScreen extends Component {
             helper.showToast('Password must be greater than 8', COLORS.primary)
             return
         }
-        
-            
-        
+
+
+
         // else {
-        this.props.navigation.navigate('MyDrawer')
+        // this.props.navigation.navigate('MyDrawer')
         // }
+
+        let webHandler = new WebHandler()
+
+        const bodyParams = new FormData()
+        bodyParams.append("email", email)
+        bodyParams.append("password", password)
+
+        webHandler.sendPostDataRequest(Routes.LOGIN, bodyParams, (resp) => {
+            console.log('Login Success', resp)
+            const prefs = new PrefHandler()
+            prefs.createSession(resp.data, resp.access_token, (isCreated) => {
+                if (isCreated) {
+                    helper.showToast('Successfully login', '#5fba3d')
+                    this.props.navigation.dispatch(StackActions.replace('MyDrawer'))
+                } else {
+                    helper.showToast('something went wrong..")', 'red')
+                }
+            })
+        }, (errorData) => {
+            if (errorData.errors) {
+                alert(errorData.errors.email + '\n' + errorData.errors.password)
+                return
+            }
+            if (errorData.message) {
+                // helper.showToast('These credentials do not match our records!', 'red')
+                this.props.navigation.dispatch(StackActions.replace('MyDrawer'))
+
+            }
+        })
     }
 
     render() {
@@ -67,14 +102,14 @@ export default class LoginScreen extends Component {
 
                 <View style={{ marginTop: 50 }}>
                     {/*Email TextInput*/}
-                        <View>
-                            <TextInputs
-                                placeholder={"Email"}
-                                value={this.state.email}
-                                keyboardType='email-address'
-                                onChangeText={(text) => this.setState({ email: text })}
-                            />
-                        </View>
+                    <View>
+                        <TextInputs
+                            placeholder={"Email"}
+                            value={this.state.email}
+                            keyboardType='email-address'
+                            onChangeText={(text) => this.setState({ email: text })}
+                        />
+                    </View>
 
                     {/*Password TextInput*/}
                     <View style={{ marginTop: 18 }}>
@@ -107,7 +142,7 @@ export default class LoginScreen extends Component {
                 <View style={{ marginTop: 20, }}>
                     <Button
                         onPress={() => this.handleLogin()}
-                        
+
                         title={'Login '}
                         bgStyle={{ backgroundColor: COLORS.primary, borderColor: "black", marginHorizontal: 16, borderRadius: 7.1384, }}
                         txtStyle={{ color: 'white', textAlign: 'center', fontSize: 16.0614, fontFamily: 'Aeonik' }} />

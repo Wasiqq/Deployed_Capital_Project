@@ -6,6 +6,12 @@ import TextInputs from '../reuseable/TextInputs';
 import Helper from '../utilis/Helper';
 import COLORS from '../assests/Colors/COLORS';
 import CheckBox from '@react-native-community/checkbox';
+import { StackActions } from '@react-navigation/native'
+
+
+import Routes from '../data/romote/Routes';
+import WebHandler from '../data/romote/WebHandler';
+import PrefHandler from '../data/local/PrefHandler';
 
 
 const helper = new Helper()
@@ -27,9 +33,22 @@ export default class SignUpScreen extends Component {
     }
   }
   handleLogin() {
-    const { email, password } = this.state;
+    const { firstName, lastName, email, birthday, password, confirmPassword, accessCode } = this.state;
+
+    if (firstName == '') {
+      helper.showToast('Enter your first name', COLORS.primary)
+      return
+    }
+    if (lastName == '') {
+      helper.showToast('Enter your last name', COLORS.primary)
+      return
+    }
     if (email == '') {
       helper.showToast('Enter your email', COLORS.primary)
+      return
+    }
+    if (birthday == '') {
+      helper.showToast('Enter your birthday', COLORS.primary)
       return
     }
     if (!helper.isValidEmail(email)) {
@@ -44,6 +63,31 @@ export default class SignUpScreen extends Component {
       helper.showToast('Password must be greater than 8', COLORS.primary)
       return
     }
+    if (confirmPassword == '') {
+      helper.showToast('confirmPassword Required', COLORS.primary)
+      return
+    }
+
+    let webHandler = new WebHandler()
+
+    const bodyParams = new FormData()
+    bodyParams.append("firstName", firstName)
+    bodyParams.append("lastName", lastName)
+    bodyParams.append("email", email)
+    bodyParams.append("birthday", birthday)
+    bodyParams.append("password", password)
+    bodyParams.append("accessCode", accessCode)
+
+
+    webHandler.sendPostDataRequest(Routes.SIGNUP, bodyParams, (resp) => {
+      console.log('SignUp Success', resp)
+      this.props.navigation.dispatch(StackActions.replace('MyDrawer'))
+
+
+    }, (errorData) => {
+      helper.showToast('error occur', 'red')
+    })
+
   }
 
   render() {
@@ -70,7 +114,7 @@ export default class SignUpScreen extends Component {
             <View style={{ width: 180 }} >
               <TextInput
                 style={{
-                  color:'black',
+                  color: 'black',
                   backgroundColor: '#F9F9F9',
                   borderRadius: 7.13684,
                   marginHorizontal: 16,
@@ -88,7 +132,7 @@ export default class SignUpScreen extends Component {
             <View style={{ width: 180 }} >
               <TextInput
                 style={{
-                  color:'black',
+                  color: 'black',
                   backgroundColor: '#F9F9F9',
                   borderRadius: 7.13684,
                   marginHorizontal: 16,
@@ -120,7 +164,6 @@ export default class SignUpScreen extends Component {
             <TextInputs
               placeholder={"Birthday"}
               value={this.state.birthday}
-              secureTextEntry={true}
               onChangeText={(text) => this.setState({ birthday: text })}
             />
           </View>
@@ -147,7 +190,6 @@ export default class SignUpScreen extends Component {
             <TextInputs
               placeholder={"Access Code"}
               value={this.state.accessCode}
-              secureTextEntry={true}
               onChangeText={(text) => this.setState({ accessCode: text })}
             />
           </View>
@@ -179,7 +221,7 @@ export default class SignUpScreen extends Component {
             txtStyle={{ color: 'white', textAlign: 'center', fontSize: 16.0614, fontFamily: 'Aeonik' }} />
         </View>
 
-        <View style={{marginBottom:20}}>
+        <View style={{ marginBottom: 20 }}>
           <View style={{ flexDirection: 'row', alignItems: 'center', marginTop: 20, alignSelf: 'center', }}>
             <View>
               <Text style={{ color: '#656564' }}>Already have an account?</Text>
