@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Text, TouchableOpacity, View, ScrollView, RefreshControl, Image, StatusBar } from 'react-native';
+import { Text, TouchableOpacity, View, ScrollView, RefreshControl, Image, StatusBar ,ActivityIndicator} from 'react-native';
 //reuseable 
 import Button from '../reuseable/Buttons';
 import TextInputs from '../reuseable/TextInputs';
@@ -39,6 +39,9 @@ export default class LoginScreen extends Component {
             helper.showToast('Password must be greater than 8', COLORS.primary)
             return
         }
+        
+            
+        
         // else {
         this.props.navigation.navigate('MyDrawer')
         // }
@@ -104,6 +107,7 @@ export default class LoginScreen extends Component {
                 <View style={{ marginTop: 20, }}>
                     <Button
                         onPress={() => this.handleLogin()}
+                        
                         title={'Login '}
                         bgStyle={{ backgroundColor: COLORS.primary, borderColor: "black", marginHorizontal: 16, borderRadius: 7.1384, }}
                         txtStyle={{ color: 'white', textAlign: 'center', fontSize: 16.0614, fontFamily: 'Aeonik' }} />

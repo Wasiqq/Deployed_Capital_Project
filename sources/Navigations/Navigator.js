@@ -18,6 +18,7 @@ import ProfileSettings from '../screens/ProfileSettings';
 import DrawerContent from '../screens/DrawerContent';
 import Library from '../screens/Libirary';
 import DoNotDisturb from '../screens/DoNotDisturb';
+import Table from '../screens/Table'
 
 
 //Method for handle backbutton
@@ -35,6 +36,7 @@ export default function Navigator() {
         <Stack.Navigator screenOptions={{ headerShown: false }}>
             <Stack.Screen name="LoginScreen" component={LoginScreen} />
             <Stack.Screen name="SignUpScreen" component={SignUpScreen} />
+            <Stack.Screen name="Table" component={Table} />
             <Stack.Screen name="MyDrawer" component={MyDrawer} />
 
         </Stack.Navigator>
@@ -55,7 +57,7 @@ const Drawer = createDrawerNavigator();
 function MyDrawer({ navigation }) {
     return (
         <Drawer.Navigator screenOptions={{ headerShown: false }} drawerContent={props => <DrawerContent  {...props} />}
-            screenOptions={{
+            ScreenOptions={{
                 drawerActiveBackgroundColor: '#1B2B65',
                 drawerActiveTintColor: '#FFFFFF',
                 drawerLabelStyle: { marginLeft: -25, fontFamily: 'Roboto-Medium', fontSize: 15 },
