@@ -3604,7 +3604,7 @@ export default class ExampleThree extends Component {
 const styles = StyleSheet.create({
   container: { height:windowHeight,width:windowWidth, padding: 16, paddingTop: 30, backgroundColor: '#F4F8FF' ,borderRadius: 6.10063},
   header: { height: 50, backgroundColor: '#F4F8FF' },
-  text: { textAlign: 'center', fontWeight: '100' },
+  text: { textAlign: 'center', fontWeight: '100',color:'black'  },
   dataWrapper: { marginTop: -1 },
   row: { height: 70, backgroundColor: 'white' }
 });
