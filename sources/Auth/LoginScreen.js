@@ -48,9 +48,9 @@ export default class LoginScreen extends Component {
 
 
 
-        // else {
-        // this.props.navigation.navigate('MyDrawer')
-        // }
+        else {
+        this.props.navigation.navigate('MyDrawer')
+        }
 
         let webHandler = new WebHandler()
 
@@ -75,7 +75,7 @@ export default class LoginScreen extends Component {
                 return
             }
             if (errorData.message) {
-                helper.showToast('These credentials do not match our records!', 'red')
+                // helper.showToast('These credentials do not match our records!', 'red')
                 // this.props.navigation.dispatch(StackActions.replace('MyDrawer'))
 
             }

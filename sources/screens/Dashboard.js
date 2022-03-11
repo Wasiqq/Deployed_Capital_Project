@@ -3,7 +3,6 @@
      import { DrawerActions } from '@react-navigation/native';
      import SurveyTextInput from '../reuseable/SurveyTextInput';
      import DashboadSurvey from './DashboadSurvey';
-     import stocks from '../assests/StocksArray/Stocks'
      import DataTable, { COL_TYPES } from 'react-native-datatable-component';
      import { Table, TableWrapper, Row,Rows } from 'react-native-table-component';
      export default class Dashboard extends Component {
