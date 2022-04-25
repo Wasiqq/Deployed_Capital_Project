@@ -1,10 +1,12 @@
      import { Text, View, TouchableOpacity, Image, ScrollView,StyleSheet, FlatList, Dimensions } from 'react-native'
      import React, { Component } from 'react'
+     
      import { DrawerActions } from '@react-navigation/native';
      import SurveyTextInput from '../reuseable/SurveyTextInput';
      import DashboadSurvey from './DashboadSurvey';
      import DataTable, { COL_TYPES } from 'react-native-datatable-component';
      import { Table, TableWrapper, Row,Rows } from 'react-native-table-component';
+     import {Calendar, CalendarList, Agenda} from 'react-native-calendars';
      export default class Dashboard extends Component {
      
      data = {
@@ -18,7 +20,7 @@
      constructor(props) {
           super(props);
           this.state = {
-               
+               dateSelected: '',
                tableHead: [
                     'Company Name',
                     "Market Cap",
@@ -185,112 +187,82 @@
                     <View>
                          <DashboadSurvey />
                     </View>
-                    <View style={{marginHorizontal:22  }}>
-                    <Text style={{ color: '#1A1A1A', fontSize: 14, fontFamily: 'Open Sans', fontWeight: '700', margin: 10 }}>Stocks</Text>
-                    <View style={styles.container}>
-               <ScrollView horizontal={true}>
-                    <View>
-                         
-                    <Table borderStyle={{borderWidth: 1, borderColor: '#C1C0B9',borderRadius: 6.10063,}}>
-                         <Row data={state.tableHead} widthArr={state.widthArr} style={styles.header} textStyle={styles.text} />
-                    </Table>
-                    <ScrollView style={styles.dataWrapper}>
-                         <Table borderStyle={{borderWidth: 1, borderColor: '#C1C0B9',borderRadius: 6.10063,}}>
-                         { 
-                         <Rows data={state.tableData} widthArr={state.widthArr}  style={styles.row} textStyle={styles.text} />
-                         }
-                         </Table>
-                    </ScrollView>
-                    </View>
-               </ScrollView>
-               <View style={{ justifyContent: 'center', alignItems: 'center', color: "#017EFA", margin: 10 }}>
-                              <TouchableOpacity style={{ paddingHorizontal: 30, paddingVertical: 8, backgroundColor: '#017EFA', borderRadius: 6.51125, margin: 10 }}
-                              onPress={() => this.props.navigation.navigate('Table')}
-                              >
-                                   <Text>
-                                        Stock List 
-                                   </Text>
-                              </TouchableOpacity>
-                         </View>
-               </View>
-                    </View>
+                    
                               <View style={{ flex:1,marginHorizontal:20,marginVertical:15 , }}>
-                              <Text style={{ color: '#1A1A1A', fontSize: 14, fontFamily: 'Open Sans', fontWeight: '700', margin: 10 }}>A Total Comissions</Text>
-                              <View style={{backgroundColor:'#F4F8FF',borderRadius: 6.51125, }}>
+                              <Text style={{ color: '#1A1A1A', fontSize: 14, fontFamily: 'Open Sans', fontWeight: '700', margin: 10 }}>Calendar</Text>
+                              <Calendar
                               
-                              <View style={{ flexDirection:'row',height:159,width:340,backgroundColor:'#F4F8FF' ,borderRadius: 6.51125,justifyContent:'space-between',}}>
-                              <View style={{ flexDirection:'column-reverse',justifyContent:'space-between', marginHorizontal:10,marginVertical:22}}>
-                                   <Text style={{ fontFamily:'Open Sans',fontSize:12 ,fontWeight:'400',color:'#373737'}}>1k</Text>
-                                   <Text style={{ fontFamily:'Open Sans',fontSize:12 ,fontWeight:'400',color:'#373737'}}></Text>
-                                   <Text style={{ fontFamily:'Open Sans',fontSize:12 ,fontWeight:'400',color:'#373737'}}>2k</Text>
-                                   <Text style={{ fontFamily:'Open Sans',fontSize:12 ,fontWeight:'400',color:'#373737'}}></Text>
-                                   <Text style={{ fontFamily:'Open Sans',fontSize:12 ,fontWeight:'400',color:'#373737'}}>3.58k</Text>
-                                   <Text style={{ fontFamily:'Open Sans',fontSize:12 ,fontWeight:'400',color:'#373737'}}></Text>
-                                   <Text style={{ fontFamily:'Open Sans',fontSize:12 ,fontWeight:'400',color:'#373737'}}>4k</Text>
-                              </View>
-                              <View style={{ flexDirection:'column-reverse',justifyContent:'space-between'}}>
-                              <Text style={{ fontFamily:'Open Sans',fontSize:10 ,fontWeight:'400',color:'#373737'}}>Jan</Text>
-                              <View style={{ backgroundColor:'#51CBFF',height:40,width:17,marginTop:95 }}></View>
-                              </View>
-                              <View style={{ flexDirection:'column-reverse',justifyContent:'space-between'}}>
-                              <Text style={{ fontFamily:'Open Sans',fontSize:10 ,fontWeight:'400',color:'#373737'}}>Feb</Text>
-                              <View style={{ backgroundColor:'#51CBFF',height:65,width:17,marginTop:70 }}></View>
-                              </View>
-                              <View style={{ flexDirection:'column-reverse',justifyContent:'space-between'}}>
-                              <Text style={{ fontFamily:'Open Sans',fontSize:10 ,fontWeight:'400',color:'#373737'}}>Mar</Text>
-                              <View style={{ backgroundColor:'#51CBFF',height:48,width:17,marginTop:87 }}></View>
-                              </View>
-                              <View style={{ flexDirection:'column-reverse',justifyContent:'space-between'}}>
-                              <Text style={{ fontFamily:'Open Sans',fontSize:10 ,fontWeight:'400',color:'#373737'}}>Apr</Text>
-                              <View style={{ backgroundColor:'#51CBFF',height:70,width:17,marginTop:65 }}></View>
-                              </View>
-                              <View style={{ flexDirection:'column-reverse',justifyContent:'space-between'}}>
-                              <Text style={{ fontFamily:'Open Sans',fontSize:10 ,fontWeight:'400',color:'#373737'}}>May</Text>
-                              <View style={{ backgroundColor:'#51CBFF',height:20,width:17,marginTop:115 }}></View>
-                              </View>
-                              <View style={{ flexDirection:'column-reverse',justifyContent:'space-between'}}>
-                              <Text style={{ fontFamily:'Open Sans',fontSize:10 ,fontWeight:'400',color:'#373737'}}>Jun</Text>
-                              <View style={{ backgroundColor:'#51CBFF',height:64,width:17,marginTop:71 }}></View>
-                              </View>
-                              <View style={{ flexDirection:'column-reverse',justifyContent:'space-between'}}>
-                              <Text style={{ fontFamily:'Open Sans',fontSize:10 ,fontWeight:'400',color:'#373737'}}>Jul</Text>
-                              <View style={{ backgroundColor:'#51CBFF',height:51,width:17,marginTop:83 }}></View>
-                              </View> 
-                              <View style={{ flexDirection:'column-reverse',justifyContent:'space-between'}}>
-                              <Text style={{ fontFamily:'Open Sans',fontSize:10 ,fontWeight:'400',color:'#373737'}}>Aug</Text>
-                              <View style={{ backgroundColor:'#51CBFF',height:37,width:17,marginTop:97 }}></View>
-                              </View>
-                              <View style={{ flexDirection:'column-reverse',justifyContent:'space-between'}}>
-                              <Text style={{ fontFamily:'Open Sans',fontSize:10 ,fontWeight:'400',color:'#373737'}}>Sep</Text>
-                              <View style={{ backgroundColor:'#51CBFF',height:20,width:17,marginTop:115 }}></View>
-                              </View>
-                              <View style={{ flexDirection:'column-reverse',justifyContent:'space-between'}}>
-                              <Text style={{ fontFamily:'Open Sans',fontSize:10 ,fontWeight:'400',color:'#373737'}}>Oct</Text>
-                              <View style={{ backgroundColor:'#51CBFF',height:38,width:17,marginTop:97 }}></View>
-                              </View>
-                              <View style={{ flexDirection:'column-reverse',justifyContent:'space-between'}}>
-                              <Text style={{ fontFamily:'Open Sans',fontSize:10 ,fontWeight:'400',color:'#373737'}}>Nov</Text>
-                              <View style={{ backgroundColor:'#51CBFF',height:60,width:17,marginTop:75 }}></View>
-                              </View>
-                              <View style={{ flexDirection:'column-reverse',justifyContent:'space-between'}}>
-                              <Text style={{ fontFamily:'Open Sans',fontSize:10 ,fontWeight:'400',color:'#373737'}}>Dec</Text>
-                              <View style={{ backgroundColor:'#51CBFF',height:73,width:17,marginTop:61 }}></View>
-                              </View>
-                              <View style={{ flexDirection:'column-reverse',justifyContent:'space-between'}}>
-                              
-                              <View style={{ backgroundColor:'#F4F8FF',height:73,width:8,marginTop:61 }}></View>
-                              </View>
+      
+  // Initially visible month. Default = now
+  current={'2012-03-01'}
+  
+  // Minimum date that can be selected, dates before minDate will be grayed out. Default = undefined
+  minDate={'2010-05-10'}
+  // Maximum date that can be selected, dates after maxDate will be grayed out. Default = undefined
+  maxDate={'2022-05-30'}
+  // Handler which gets executed on day press. Default = undefined
+  // onDayPress={day => {
+  //   console.log('selected day', day);
+  // }}
+  markedDates={this.state.dateSelected}
+  
+  onDayPress={(day) => {
+    this.setState({
+    dateSelected:{[day.dateString]:{selected: true, selectedColor: 'black'}}
+    },() => {
+    console.log(this.state.dateSelected)
+    })
+    }}
+    
+  
+  // Handler which gets executed on day long press. Default = undefined
+  onDayLongPress={day => {
+    console.log('selected day', day);
+  }}
+  // Month format in calendar title. Formatting values: http://arshaw.com/xdate/#Formatting
+  monthFormat={'yyyy MM'}
+  // Handler which gets executed when visible month changes in calendar. Default = undefined
+  onMonthChange={month => {
+    console.log('month changed', month);
+  }}
+  // Hide month navigation arrows. Default = false
+  // hideArrows={true}
+  // Replace default arrows with custom ones (direction can be 'left' or 'right')
+  // renderArrow={direction => <Arrow />}
+  // Do not show days of other months in month page. Default = false
+  hideExtraDays={true}
+  // If hideArrows = false and hideExtraDays = false do not switch month when tapping on greyed out
+  // day from another month that is visible in calendar page. Default = false
+  // disableMonthChange={true}
+  // If firstDay=1 week starts from Monday. Note that dayNames and dayNamesShort should still start from Sunday
+  firstDay={1}
+  // Hide day names. Default = false
+  // hideDayNames={true}
+  // Show week numbers to the left. Default = false
+  showWeekNumbers={true}
+  // Handler which gets executed when press arrow icon left. It receive a callback can go back month
+  onPressArrowLeft={subtractMonth => subtractMonth()}
+  // Handler which gets executed when press arrow icon right. It receive a callback can go next month
+  onPressArrowRight={addMonth => addMonth()}
+  // Disable left arrow. Default = false
+  // disableArrowLeft={true}
+  // Disable right arrow. Default = false
+  // disableArrowRight={true}
+  // Disable all touch events for disabled days. can be override with disableTouchEvent in markedDates
+  disableAllTouchEventsForDisabledDays={false}
+  // Replace default month and year title with custom one. the function receive a date as parameter
+  
+  // Enable the option to swipe between months. Default = false
+  enableSwipeMonths={true}
+  
+  theme={{ 
+    monthTextColor:'black',
+    calendarBackground: '#F4F8FF',
 
 
+   }}
 
-                              </View>
-                              <View style={{ alignItems:'center',backgroundColor:'#F4F8FF' }}>
-                              <View style={{ height:1,backgroundColor: '#CBCBCB',width:320,marginHorizontal:15 ,marginVertical:6}}></View>
-                              
-                              <Text style={{ fontFamily:'Open Sans',fontSize:14 ,fontWeight:'600',color:'#9E9D9D'}}>Total Comissions</Text>
-                              <Text style={{ fontFamily:'Open Sans',fontSize:18 ,fontWeight:'700',color:'#1A1A1A'}}>$3,000</Text>
-                              </View>
-                              </View>
+/>
                               </View>
 
                     

@@ -18,7 +18,7 @@ export default class DashboadSurvey extends Component {
     render() {
         const windowWidth = Dimensions.get('window').width;
         return (
-            <View style={{ flex: 1, }}>
+            <View style={{ flex: 1,}}>
                 <View style={{ marginHorizontal: 25 }}>
                     <Text style={{ color: '#1A1A1A', fontSize: 14, fontWeight: "bold", fontFamily: 'Open Sans', }}>Survey</Text>
                     <View style={{ backgroundColor: '#F4F8FF', borderRadius: 6.51125, marginTop: 15, width: 345 }}>
