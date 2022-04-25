@@ -191,7 +191,7 @@
                               <View style={{ flex:1,marginHorizontal:20,marginVertical:15 , }}>
                               <Text style={{ color: '#1A1A1A', fontSize: 14, fontFamily: 'Open Sans', fontWeight: '700', margin: 10 }}>Calendar</Text>
                               <Calendar
-                              
+                              style={{borderRadius:6.51125}}
       
   // Initially visible month. Default = now
   current={'2012-03-01'}
