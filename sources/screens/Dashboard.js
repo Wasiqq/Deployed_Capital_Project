@@ -1,81 +1,32 @@
      import { Text, View, TouchableOpacity, Image, ScrollView,StyleSheet, FlatList, Dimensions } from 'react-native'
      import React, { Component } from 'react'
-     
+     import AsyncStorage from '@react-native-async-storage/async-storage';
      import { DrawerActions } from '@react-navigation/native';
      import SurveyTextInput from '../reuseable/SurveyTextInput';
      import DashboadSurvey from './DashboadSurvey';
+     import COLORS from '../assests/Colors/COLORS';
+     import Helper from '../utilis/Helper';
      import DataTable, { COL_TYPES } from 'react-native-datatable-component';
      import { Table, TableWrapper, Row,Rows } from 'react-native-table-component';
      import {Calendar, CalendarList, Agenda} from 'react-native-calendars';
+     const helper = new Helper();
      export default class Dashboard extends Component {
      
-     data = {
-          labels: ["January", "February", "March", "April", "May", "June"],
-          datasets: [
-               {
-                    data: [20, 45, 28, 80, 99, 43]
-               }
-          ]
-     };
+          componentDidMount() {
+               
+             }
      constructor(props) {
           super(props);
           this.state = {
                dateSelected: '',
-               tableHead: [
-                    'Company Name',
-                    "Market Cap",
-                    "%YTDGains",
-                    "StockPrice",
-                    "WeekpriceRange",
-                    "My Investment",
-                    "Total Investment",
-                    
-               ],
-               widthArr: [130, 94, 90, 100, 120, 80, 80],
-               
-               tableData: [
-               [
-                    "3M (MMM)",
-                    "$102.37 billion",
-                    "1.63%",
-                    "177.64",
-                    "163.38\n$208.95",
-                    " - ",
-                    "700",],
-               [
-                    "Abbott Labs (ABT)",
-                    "$249.33 billion",
-                    "28.78%",
-                    "$141.00",
-                    "$105.36 \n$142.60",
-                    " - ",
-                    " - ",],
-               [
-                    "AbbVie (ABBV)",
-                    "$240.31 billion",
-                    "26.86%",
-                    "$135.93",
-                    "$101.81\n $136.83",
-                    " - ",
-                    " - ",],
-               [
-                    "ABIOMED (ABMD)",
-                    "$16.47 billion",
-                    "11.68%",
-                    "$362.06",
-                    "$261.27 \n $387.40",
-                    " - ",
-                    " - ",],
-               [
-                    "Accenture (ACN)",
-                    "$261.75 billion",
-                    "58.43%",
-                    "$413.83",
-                    "$241.73 \n $417.37",
-                    " - ",
-                    " - ",],
+               task1:'',
+               task2:'',
+               task3:'',
+               task4:'',
+               task5:'',
+               task6:'',
 
-          ]
+               
           }
      }
      
@@ -191,15 +142,16 @@
                               <View style={{ flex:1,marginHorizontal:20,marginVertical:15 , }}>
                               <Text style={{ color: '#1A1A1A', fontSize: 14, fontFamily: 'Open Sans', fontWeight: '700', margin: 10 }}>Calendar</Text>
                               <Calendar
-                              style={{borderRadius:6.51125}}
+                              style={{borderRadius:6.51125,marginHorizontal:5}}
+                              
       
   // Initially visible month. Default = now
-  current={'2012-03-01'}
+  current={'2022-4-28'}
   
   // Minimum date that can be selected, dates before minDate will be grayed out. Default = undefined
-  minDate={'2010-05-10'}
+  minDate={'2010-5-10'}
   // Maximum date that can be selected, dates after maxDate will be grayed out. Default = undefined
-  maxDate={'2022-05-30'}
+  maxDate={'2030-5-30'}
   // Handler which gets executed on day press. Default = undefined
   // onDayPress={day => {
   //   console.log('selected day', day);
@@ -208,9 +160,10 @@
   
   onDayPress={(day) => {
     this.setState({
-    dateSelected:{[day.dateString]:{selected: true, selectedColor: 'black'}}
+    dateSelected:day.dateString
     },() => {
     console.log(this.state.dateSelected)
+    this._Check();
     })
     }}
     
@@ -220,7 +173,7 @@
     console.log('selected day', day);
   }}
   // Month format in calendar title. Formatting values: http://arshaw.com/xdate/#Formatting
-  monthFormat={'yyyy MM'}
+  monthFormat={'MMMM'}
   // Handler which gets executed when visible month changes in calendar. Default = undefined
   onMonthChange={month => {
     console.log('month changed', month);
@@ -258,6 +211,8 @@
   theme={{ 
     monthTextColor:'black',
     calendarBackground: '#F4F8FF',
+    selectedDayBackgroundColor:'#0A194E',
+    
 
 
    }}
@@ -265,15 +220,169 @@
 />
                               </View>
 
-                    
-
+                              <View style={{marginHorizontal:5}}>
+                              <Text style={{ color: '#1A1A1A', fontSize: 14, fontFamily: 'Open Sans', fontWeight: '700', marginHorizontal: 27,marginVertical:10 }}>My Performance</Text>
+                            <View style={{flex:1,marginHorizontal:22,backgroundColor:'#F4F8FF',height:40,borderRadius:6.51125,flexDirection:'row',justifyContent:'space-between',alignItems:'center',paddingHorizontal:5}}>
+                            <Text
+            style={{
+              fontWeight: 'bold',
+              fontSize: 14,
+              color:'black',
+              
+       }}>
+          Push Ups
+          </Text>
+                              <Text
+            style={{
+              
+              fontSize:14,
+              textAlign:'right',
+              color:'black',
+              
+            }}>
+            {this.state.task1}
+          </Text>
+                            </View>
+                            <View style={{flex:1,marginVertical:5,marginHorizontal:22,backgroundColor:'#F4F8FF',height:40,borderRadius:6.51125,flexDirection:'row',justifyContent:'space-between',alignItems:'center',paddingHorizontal:5}}>
+                            <Text
+            style={{
+              fontWeight: 'bold',
+              fontSize: 14,
+              color:'black',
+              
+       }}>
+          Pull Ups
+          </Text>
+                              <Text
+            style={{
+              
+              fontSize:14,
+              textAlign:'right',
+              color:'black',
+              
+            }}>
+            {this.state.task2}
+          </Text>
+                            </View>
+                            <View style={{flex:1,marginVertical:1,marginHorizontal:22,backgroundColor:'#F4F8FF',height:40,borderRadius:6.51125,flexDirection:'row',justifyContent:'space-between',alignItems:'center',paddingHorizontal:5}}>
+                            <Text
+            style={{
+              fontWeight: 'bold',
+              fontSize: 14,
+              color:'black',
+              
+       }}>
+          Squats
+          </Text>
+                              <Text
+            style={{
+              
+              fontSize:14,
+              textAlign:'right',
+              color:'black',
+              
+            }}>
+            {this.state.task3}
+          </Text>
+                            </View>
+                             
+                            <View style={{flex:1,marginVertical:5,marginHorizontal:22,backgroundColor:'#F4F8FF',height:40,borderRadius:6.51125,flexDirection:'row',justifyContent:'space-between',alignItems:'center',paddingHorizontal:5}}>
+                            <Text
+            style={{
+              fontWeight: 'bold',
+              fontSize: 14,
+              color:'black',
+              
+       }}>
+          1 Mint Run
+          </Text>
+                              <Text
+            style={{
+              
+              fontSize:14,
+              textAlign:'right',
+              color:'black',
+              
+            }}>
+            {this.state.task4}
+          </Text>
+                            </View>
+                             
+                            <View style={{flex:1,marginVertical:1,marginHorizontal:22,backgroundColor:'#F4F8FF',height:40,borderRadius:6.51125,flexDirection:'row',justifyContent:'space-between',alignItems:'center',paddingHorizontal:5}}>
+                            <Text
+            style={{
+              fontWeight: 'bold',
+              fontSize: 14,
+              color:'black',
+              
+       }}>
+          Sit Ups in 1 Mint
+          </Text>
+                              <Text
+            style={{
+              
+              fontSize:14,
+              textAlign:'right',
+              color:'black',
+              
+            }}>
+            {this.state.task5}
+          </Text>
+                            </View>
+                             
+                            <View style={{flex:1,marginVertical:5,marginHorizontal:22,backgroundColor:'#F4F8FF',height:40,borderRadius:6.51125,flexDirection:'row',justifyContent:'space-between',alignItems:'center',paddingHorizontal:5}}>
+                            <Text
+            style={{
+              fontWeight: 'bold',
+              fontSize: 14,
+              color:'black',
+              
+       }}>
+          Sit and Reach
+          </Text>
+                              <Text
+            style={{
+              
+              fontSize:14,
+              textAlign:'right',
+              color:'black',
+              
+            }}>
+            {this.state.task6}
+          </Text>
+                            </View>
+                             </View>
+     
+                             
 
 
 
                </ScrollView>
           )
      }
+     _Check = async () => {
+          
+         
+            const session = await AsyncStorage.getItem('@session');
+            if (session) {
+              var ses = JSON.parse(session);
+              
+
+              if(this.state.dateSelected==ses.TodayDate){
+            this.setState({task1:ses.ans1,task2:ses.ans2,task3:ses.ans3,task4:ses.ans4,task5:ses.ans5,task6:ses.ans6,});
+              }
+              else{
+               helper.showToast('Kindly Add Workout For This Date '+this.state.dateSelected, COLORS.primary)
+               return
+              }
+            } else {
+              helper.showToast('Not any Workout Found ', COLORS.primary)
+              return
+            }
+          
+        }
      }
+     
      const styles = StyleSheet.create({
      container: { height:500,width:345,  paddingTop: 10, paddingHorizontal:10, backgroundColor: '#F4F8FF' ,borderRadius: 6.10063},
      header: { height: 50, backgroundColor: '#F4F8FF' },
